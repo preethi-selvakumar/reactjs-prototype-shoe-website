@@ -19,11 +19,13 @@ const Home = () => {
     const { isSignedUp, isLoggedIn } = useAppContext();
 
     useEffect(() => {
+        // பயனர் சைன் அப் செய்யவில்லை என்றால், உடனடியாக alert வரும்
         if (!isSignedUp) {
             if (window.confirm("Please signup to continue")) {
                 navigate("/signup");
             }
-        }
+        } 
+        // பயனர் சைன் அப் செய்து, ஆனால் உள்நுழையவில்லை என்றால் மட்டுமே இந்த alert வரும்
         else if (!isLoggedIn) {
             if (window.confirm("Please login to continue")) {
                 navigate("/login");
