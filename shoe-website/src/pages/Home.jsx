@@ -17,25 +17,29 @@ import HeroSection from "../components/HeroSection";
 
 const Home = () => {
     const navigate = useNavigate();
-    const { isLoggedIn, isSignedUp } = useAppContext(); // 🚀 Get isLoggedIn and isSignedUp from useContext
+    // Get isSignedUp and isLoggedIn from the global context
+    const { isSignedUp, isLoggedIn } = useAppContext();
 
     useEffect(() => {
+        // First, check if the user has signed up
         if (!isSignedUp) {
             if (window.confirm("Please signup to continue")) {
                 navigate("/signup");
             }
-        } else {
-            if (!isLoggedIn) {
-                if (window.confirm("Please login to continue")) {
-                    navigate("/login");
-                }
+        }
+        // If they are signed up but NOT logged in, then prompt them to log in
+        else if (isSignedUp && !isLoggedIn) {
+            if (window.confirm("Please login to continue")) {
+                navigate("/login");
             }
         }
-    }, [navigate, isSignedUp, isLoggedIn]); // Add isSignedUp and isLoggedIn in the dependency array
+        // If they are signed up AND logged in, do nothing. This is the correct state.
+
+    }, [navigate, isSignedUp, isLoggedIn]);
 
     return (
         <div className="home-container">
-            {/* Wrapping all content inside a single wrapper */}
+            {/* The rest of the page content will only render if the checks are passed implicitly */}
             <div className="home-content-wrapper">
                 <Navbar />
                 <HeroSection />
